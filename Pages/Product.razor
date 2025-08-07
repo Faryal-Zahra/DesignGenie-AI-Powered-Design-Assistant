@@ -1,0 +1,133 @@
+﻿@page "/product"
+@using System.ComponentModel.DataAnnotations
+@using System.Text.Json
+@using System.Text
+@inject DesignService DesignService
+@inject NavigationManager Navigation
+
+<PageTitle>DesignGenie</PageTitle>
+
+<header class="navbar">
+    <div class="container">
+        <a href="/types">
+            <button class="back-button">Back</button>
+        </a>
+        <h1 class="logo">DesignGenie</h1>
+
+        <a href="/setting">
+            <button class="settings-button">⚙️</button>
+        </a>
+    </div>
+</header>
+
+<section class="form-section">
+    <h2>Set Your Design Constraints</h2>
+
+    <EditForm Model="@productInput" OnValidSubmit="GenerateDesign" OnFieldChanged="HandleFieldChanged">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="form-container">
+            <input type="text" placeholder="Enter Product Name" @bind="productInput.ProductName" class="form-control" />
+            <ValidationMessage For="@(() => productInput.ProductName)" class="validation-message" />
+
+            <input type="number" placeholder="Enter Quality" @bind="productInput.Quality" class="form-control" />
+            <ValidationMessage For="@(() => productInput.Quality)" class="validation-message" />
+
+            <input type="number" placeholder="Enter Size" @bind="productInput.Size" class="form-control" />
+            <ValidationMessage For="@(() => productInput.Size)" class="validation-message" />
+
+            <label>Complexity Level: <span>@productInput.ComplexityLevel</span></label>
+            <input type="range" min="1" max="10" @bind="productInput.ComplexityLevel" />
+
+            <button class="generate-btn" type="submit" disabled="@isGenerating">
+                @if (isGenerating)
+                {
+                    <img src="loading.gif" alt="Loading..." style="width: 48px; height: 48px;" />
+                    <span>Generating...</span>
+                }
+                else
+                {
+                    <span>🚀 Generate Design</span>
+                }
+            </button>
+        </div>
+    </EditForm>
+</section>
+
+@code {
+    private ProductInputModel productInput = new();
+    private bool isGenerating = false;
+
+    private void NavigateToTypes()
+    {
+        Navigation.NavigateTo("/types", forceLoad: true);
+    }
+
+    private void HandleFieldChanged(FieldChangedEventArgs args)
+    {
+        // Optional: Add logs or trigger events
+    }
+
+    private async Task GenerateDesign()
+    {
+        isGenerating = true;
+
+        string imagePrompt = $"Design a product concept for a '{productInput.ProductName}', aimed at showcasing its visual appeal and functional aspects. " +
+                             $"The product should reflect a quality rating of {productInput.Quality} out of 10, indicating its craftsmanship and durability. " +
+                             $"Target a physical or visual size of approximately {productInput.Size} units. " +
+                             $"The design should use modern, sleek aesthetics with minimalistic elements, clearly indicating form and usability. " +
+                             $"Render the product with realistic shadows, clean edges, and optional exploded views to highlight internal components or design layers. " +
+                             $"Include a neutral background to keep the focus on the product itself.";
+
+        try
+        {
+            using var httpClient = new HttpClient();
+            var content = new StringContent(
+                JsonSerializer.Serialize(new { imagePrompt }),
+                Encoding.UTF8,
+                "application/json"
+            );
+
+            var response = await httpClient.PostAsync("https://nft-cors-server-production.up.railway.app/generateNft", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var responseBody = await response.Content.ReadAsStringAsync();
+                using var doc = JsonDocument.Parse(responseBody);
+                var imageUrl = doc.RootElement.GetProperty("data")[0].GetProperty("url").GetString();
+
+                DesignService.ImageUrl = imageUrl;
+                DesignService.ImagePrompt = imagePrompt;
+                Navigation.NavigateTo("/gene");
+            }
+            else
+            {
+                Console.WriteLine($"❌ API call failed: {response.StatusCode}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("🔥 Error calling API:");
+            Console.WriteLine(ex.Message);
+        }
+
+        isGenerating = false;
+    }
+
+    public class ProductInputModel
+    {
+        [Required(ErrorMessage = "Product name is required.")]
+        [MinLength(2, ErrorMessage = "Minimum 2 characters required.")]
+        public string ProductName { get; set; } = string.Empty;
+
+        [Range(1, 10, ErrorMessage = "Quality must be between 1 and 10.")]
+        public int Quality { get; set; }
+
+        [Range(1, 1000, ErrorMessage = "Size must be a positive number.")]
+        public int Size { get; set; }
+
+        [Range(1, 10)]
+        public int ComplexityLevel { get; set; } = 5;
+    }
+}

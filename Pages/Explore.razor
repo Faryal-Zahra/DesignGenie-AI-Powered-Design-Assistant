@@ -1,0 +1,68 @@
+@page "/explore"
+
+
+@using Microsoft.AspNetCore.Components.Web
+@inject NavigationManager Navigation
+<PageTitle>Explore - DesignGenie</PageTitle>
+
+<header class="navbar">
+    <div class="container">
+        <h1 class="logo">DesignGenie</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/howitwork">How it works</a>
+            <a href="/features">Features</a>
+            <a href="/explore" class="active">Explore</a>
+            <a href="/reviews">Reviews</a>
+            <a href="/learn" class="learn-more">Learn More</a>
+        </nav>
+    </div>
+</header>
+
+<section class="explore-hero">
+    <h1>Explore AI-Generated Designs</h1>
+    <p class="intro">Discover a wide range of prototypes powered by intelligent design automation. Get inspired and
+        kickstart your project with ease.</p>
+</section>
+
+<section class="explore-grid">
+    @foreach (var item in ExploreItems)
+    {
+    <div class="explore-card">
+        <h3>@item.Title</h3>
+        <p>@item.Description</p>
+        <a href="@item.Link">
+            <button class="cta small">View</button>
+        </a>
+    </div>
+    }
+</section>
+
+<section class="cta-section">
+    <h2>Ready to create your own?</h2>
+    <p>Use DesignGenie to bring your ideas to life in minutes.</p>
+    <a href="/types">
+        <button class="cta">Start Exploring</button>
+    </a>
+</section>
+
+<link href="css/explore.css" rel="stylesheet" />
+
+@code {
+public class ExploreItem
+{
+public string Title { get; set; }
+public string Description { get; set; }
+public string Link { get; set; }
+}
+
+private List<ExploreItem> ExploreItems = new()
+    {
+    new ExploreItem { Title = "Product Design", Description = "Modern Product Design for comapnies benefits", Link =
+    "/view?id=1" },
+    new ExploreItem { Title = "Architecture Design", Description = "Elegant product listing for furniture design", Link =
+    "/view?id=2" },
+    new ExploreItem { Title = "Prototype Design", Description = " Streamlined layout for food UI services", Link =
+    "/view?id=3" }
+    };
+    }

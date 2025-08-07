@@ -1,0 +1,36 @@
+﻿@page "/learn"
+@using Microsoft.AspNetCore.Components.Web
+@inject NavigationManager Navigation
+
+<div class="learn-more-container">
+    <h1>Learn More About DesignGenie</h1>
+    <p>
+        DesignGenie is your ultimate solution for creating, customizing, and managing
+designs with ease. Explore its features to unleash your creativity.
+    </p>
+    
+    <div class="features">
+        <div class="feature-item">
+            <h2>🚀 Fast and Efficient</h2>
+            <p>Generate high-quality designs in just seconds.</p>
+        </div>
+        <div class="feature-item">
+            <h2>🎨 Full Customization</h2>
+            <p>Tailor every detail to suit your vision and creativity.</p>
+        </div>
+        <div class="feature-item">
+            <h2>💾 Save & Export</h2>
+            <p>Download and share your designs effortlessly.</p>
+        </div>
+    </div>
+     <a href="/types">
+    <button class="back-button" @onclick="GoBack">⬅ Back</button>
+    </a>
+</div>
+
+@code {
+    void GoBack()
+    {
+        Navigation.NavigateTo("/");
+    }
+}

@@ -1,0 +1,145 @@
+﻿@page "/gene"
+
+
+
+@using Microsoft.AspNetCore.Components.Web
+@inject NavigationManager Navigation
+@inject IJSRuntime JS
+@using System.Text.Json
+@using System.Text
+@using System.Net.Http
+@using System.Net.Http.Headers
+@inject DesignService DesignService
+@inject HttpClient Http
+
+<PageTitle>DesignGenie</PageTitle>
+
+<header class="navbar">
+    <div class="container">
+
+        <h1 class="logo">DesignGenie</h1>
+
+        <a href="/input">
+            <button class="settings-button">⚙️</button>
+        </a>
+    </div>
+</header>
+
+
+<div class="container">
+    <h3 class="title">Generated Design Preview</h3>
+
+    <div class="preview" style="max-width: 500px;">
+        <img src="@imageUrl" alt="Generated Design" class="preview-image"
+            style="width: 500px; height: 300px; border-radius: 10px;" />
+    </div>
+
+    <div class="actions">
+        @* <a href="@imageUrl" download="ProductDesign.png"> *@
+        <a
+            href="@($"http://nft-cors-server-production.up.railway.app/download/download-image?url={Uri.EscapeDataString(DesignService.ImageUrl)}")">
+            <button class="btn-end">Download</button>
+        </a>
+        @* </a> *@
+        <button class="btn-end" @onclick="GenerateDesign" disabled="@isGenerating">
+            @if (isGenerating)
+            {
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <img src="loading.gif" alt="Loading..." style="width: 48px; height 48px;" />
+                    <span>Generating...</span>
+                </div>
+            }
+            else
+            {
+                <span>Regenrate</span>
+            }
+        </button>
+    </div>
+</div>
+
+
+
+
+@code {
+    void NavigateToTypes()
+    {
+        Console.WriteLine("Navigating to /types...");
+        Navigation.NavigateTo("/types", forceLoad: true);
+        StateHasChanged();
+    }
+}
+
+@code {
+    private string imageUrl;
+    private string imagePrompt;
+    private bool isGenerating { get; set; } = false;
+
+    protected override void OnInitialized()
+    {
+        imageUrl = DesignService.ImageUrl;
+        imagePrompt = DesignService.ImagePrompt;
+    }
+
+    private async Task DownloadImage()
+    {
+        @* await JS.InvokeVoidAsync("downloadImage", imageUrl, "DesignGenie_Product.png"); *@
+        using var httpClient = new HttpClient();
+        var imageBytes = await httpClient.GetByteArrayAsync(imageUrl);
+        var base64Image = Convert.ToBase64String(imageBytes);
+        var dataUrl = $"data:image/png;base64,{base64Image}";
+
+        await JS.InvokeVoidAsync("triggerDownloadFromDataUrl", dataUrl);
+    }
+
+    private async Task GenerateDesign()
+    {
+        isGenerating = true;
+
+        Console.WriteLine($"Image Prompt: {imagePrompt}");
+
+        try
+        {
+            using var httpClient = new HttpClient();
+            var content = new StringContent(
+            JsonSerializer.Serialize(new { imagePrompt }),
+            Encoding.UTF8,
+            "application/json"
+            );
+
+            var response = await httpClient.PostAsync("https://nft-cors-server-production.up.railway.app/generateNft", content);
+
+            Console.WriteLine($"Image Prompt: {response}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var responseBody = await response.Content.ReadAsStringAsync();
+                Console.WriteLine("✅ API Response:");
+                Console.WriteLine(responseBody);
+                using var doc = JsonDocument.Parse(responseBody);
+                var newImageUrl = doc.RootElement.GetProperty("data")[0].GetProperty("url").GetString();
+
+                DesignService.ImageUrl = newImageUrl;
+                DesignService.ImagePrompt = imagePrompt;
+                Console.WriteLine("Saved Image URL: " + newImageUrl);
+
+                imageUrl = newImageUrl;
+                StateHasChanged();
+
+                isGenerating = false;
+                @* Navigation.NavigateTo("/gene"); *@
+            }
+            else
+            {
+                Console.WriteLine($"❌ API call failed: {response.StatusCode}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("🔥 Error calling API:");
+            Console.WriteLine(ex.Message);
+        }
+        isGenerating = false;
+        // After API call, you can navigate if needed
+        @* Navigation.NavigateTo("/gene"); *@
+    }
+}

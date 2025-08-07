@@ -1,0 +1,115 @@
+is_global = true
+build_property.EnableAotAnalyzer = 
+build_property.EnableSingleFileAnalyzer = 
+build_property.EnableTrimAnalyzer = false
+build_property.IncludeAllContentForSelfExtract = 
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = false
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = browser
+build_property.RootNamespace = SE_Project_2
+build_property.RootNamespace = SE_Project_2
+build_property.ProjectDir = C:\Users\786\OneDrive\Pictures\se_final_file\FSE FE\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = false
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\786\OneDrive\Pictures\se_final_file\FSE FE
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/786/OneDrive/Pictures/se_final_file/FSE FE/App.razor]
+build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/786/OneDrive/Pictures/se_final_file/FSE FE/Pages/Component.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tcG9uZW50LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/786/OneDrive/Pictures/se_final_file/FSE FE/Pages/Counter.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/786/OneDrive/Pictures/se_final_file/FSE FE/Pages/Download.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRG93bmxvYWQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/786/OneDrive/Pictures/se_final_file/FSE FE/Pages/Error.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/786/OneDrive/Pictures/se_final_file/FSE FE/Pages/Explore.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXhwbG9yZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/786/OneDrive/Pictures/se_final_file/FSE FE/Pages/Features.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRmVhdHVyZXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/786/OneDrive/Pictures/se_final_file/FSE FE/Pages/Gene.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcR2VuZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/786/OneDrive/Pictures/se_final_file/FSE FE/Pages/Home.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9tZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/786/OneDrive/Pictures/se_final_file/FSE FE/Pages/Howitwork.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG93aXR3b3JrLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/786/OneDrive/Pictures/se_final_file/FSE FE/Pages/Input.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5wdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/786/OneDrive/Pictures/se_final_file/FSE FE/Pages/Learn.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTGVhcm4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/786/OneDrive/Pictures/se_final_file/FSE FE/Pages/Product.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZHVjdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/786/OneDrive/Pictures/se_final_file/FSE FE/Pages/Prototype.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvdG90eXBlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/786/OneDrive/Pictures/se_final_file/FSE FE/Pages/Reviews.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmV2aWV3cy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/786/OneDrive/Pictures/se_final_file/FSE FE/Pages/Routes.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUm91dGVzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/786/OneDrive/Pictures/se_final_file/FSE FE/Pages/Setting.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2V0dGluZy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/786/OneDrive/Pictures/se_final_file/FSE FE/Pages/Types.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVHlwZXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/786/OneDrive/Pictures/se_final_file/FSE FE/Pages/View.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlldy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/786/OneDrive/Pictures/se_final_file/FSE FE/Pages/Weather.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcV2VhdGhlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/786/OneDrive/Pictures/se_final_file/FSE FE/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/786/OneDrive/Pictures/se_final_file/FSE FE/Layout/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE1haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-0e9ei7a4l1
+
+[C:/Users/786/OneDrive/Pictures/se_final_file/FSE FE/Layout/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE5hdk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-t97c8vhhj0

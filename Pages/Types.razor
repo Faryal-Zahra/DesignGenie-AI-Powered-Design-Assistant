@@ -1,0 +1,84 @@
+﻿@page "/types"
+
+@using Microsoft.AspNetCore.Components.Web
+@inject NavigationManager Navigation
+
+<header class="navbar">
+    <div class="container">
+        <h1 class="logo">DesignGenie</h1>
+        <nav>
+            <a href="#">How it works</a>
+            <a href="#">Features</a>
+            <a href="#">Explore</a>
+            <a href="#">Reviews</a>
+            <a href="/learn" class="learn-more">Learn More</a>
+        </nav>
+    </div>
+</header>
+
+
+<section class="hero">
+    <div class="main-container">
+        <div class="hero-text">
+            <h1 class="hero-text">
+                <span class="first-line">Architecture and Prototype Design</span><br>
+            </h1>
+        </div>
+
+
+        <div class="section-divider"></div>
+        <p class="sub-text">Transforming Ideas into Reality with AI-powered Design</p>
+
+        <div class="features-container">
+            <div class="feature-box">
+                <img src="housing.jpg" alt="AI Design">
+                <h3>AI-Powered Designs</h3>
+                <p>Generate unique and intelligent design ideas with AI.</p>
+                <a href="/input">
+                    <button class="btn-green">Architecture Designing</button>
+                </a>
+            </div>
+
+            <div class="feature-box">
+                <img src="prototyping.jpg" alt="Prototyping">
+                <h3>Interactive Prototypes</h3>
+                <p>Build and test prototypes with real-time collaboration.</p>
+                <a href="/prototype">
+                    <button class="btn-green">Protoype Designing</button>
+                </a>
+            </div>
+
+            <div class="feature-box">
+                <img src="download.png" alt="Customization">
+                <h3>Product Design</h3>
+                <p>Create  dummy model Product design before making.</p>
+                <a href="/product">
+                    <button class="btn-green">Product Designing</button>
+                </a>
+            </div>
+        </div>
+
+
+        <div class="hero-image">
+            <!-- Your AI-powered design image goes here -->
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+@code {
+    void NavigateToTypes()
+    {
+        Console.WriteLine("Navigating to /types...");
+        Navigation.NavigateTo("/types", forceLoad: true);
+        StateHasChanged();
+    }
+}

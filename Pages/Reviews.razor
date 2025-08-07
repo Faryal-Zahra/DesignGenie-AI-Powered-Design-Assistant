@@ -1,0 +1,117 @@
+@page "/reviews"
+
+<PageTitle>Reviews - DesignGenie</PageTitle>
+
+<header class="navbar">
+    <div class="container">
+        <h1 class="logo">DesignGenie</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/howitwork">How it works</a>
+            <a href="/features">Features</a>
+            <a href="#">Explore</a>
+            <a href="/reviews" class="active">Reviews</a>
+            <a href="/learn" class="learn-more">Learn More</a>
+        </nav>
+    </div>
+</header>
+
+<section class="reviews-hero">
+    <h1>What Our Users Are Saying</h1>
+    <p class="intro">
+        Join thousands of designers and creators who rely on DesignGenie to turn ideas into stunning prototypes.
+    </p>
+</section>
+
+<section class="reviews-grid">
+    @foreach (var review in ReviewList)
+    {
+        <div class="review-card">
+            <div class="review-header">
+                <h3>@review.Name</h3>
+                <p class="role">@review.Role</p>
+                <div class="stars">
+                    @for (int i = 0; i < review.Rating; i++)
+                    {
+                        <span style="color: gold;">★</span>
+                    }
+                    @for (int i = review.Rating; i < 5; i++)
+                    {
+                        <span style="color: #ccc;">★</span>
+                    }
+                </div>
+            </div>
+            <p class="review-text">@review.Text</p>
+        </div>
+    }
+</section>
+
+<section class="cta-section">
+    <h2>Share your experience</h2>
+    <p>We'd love to hear how DesignGenie helped you!</p>
+    <button class="cta" @onclick="() => showModal = true">Leave a Review</button>
+</section>
+
+@if (showModal)
+{
+    <div class="modal-overlay">
+        <div class="modal-form">
+            <h3 style="color: #222;">Leave a Review</h3>
+            <label>Name:</label>
+            <input @bind="newReview.Name" placeholder="Your name" />
+
+            <label>Role:</label>
+            <input @bind="newReview.Role" placeholder="Your role (e.g., Developer)" />
+
+            <label>Review:</label>
+            <textarea @bind="newReview.Text" placeholder="Share your experience..."></textarea>
+
+            <label>Rating:</label>
+            <div class="star-rating">
+                @for (int i = 1; i <= 5; i++)
+                {
+                    <span @onclick="@(() => newReview.Rating = i)" style="cursor:pointer; font-size: 1.5rem; color:@(i <= newReview.Rating ? "gold" : "#ccc")">★</span>
+                }
+            </div>
+
+            <button class="cta" @onclick="SubmitReview">Submit</button>
+            <button class="cta secondary" @onclick="() => showModal = false">Cancel</button>
+        </div>
+    </div>
+}
+
+<link href="css/reviews.css" rel="stylesheet" />
+
+@code {
+    public class ReviewModel
+    {
+        public string Name { get; set; }
+        public string Role { get; set; }
+        public int Rating { get; set; }
+        public string Text { get; set; }
+    }
+
+    private List<ReviewModel> ReviewList = new()
+    {
+        new ReviewModel { Name = "Sarah M.", Role = "Product Designer", Rating = 5, Text = "DesignGenie made my workflow incredibly efficient!" },
+        new ReviewModel { Name = "James T.", Role = "UX Lead", Rating = 4, Text = "I love how intuitive and fast the tool is." },
+        new ReviewModel { Name = "Priya R.", Role = "Startup Founder", Rating = 5, Text = "This is a game-changer for small teams!" }
+    };
+
+    private ReviewModel newReview = new();
+    private bool showModal = false;
+
+    private void SubmitReview()
+    {
+        ReviewList.Add(new ReviewModel
+        {
+            Name = newReview.Name,
+            Role = newReview.Role,
+            Rating = newReview.Rating,
+            Text = newReview.Text
+        });
+
+        newReview = new ReviewModel();
+        showModal = false;
+    }
+}

@@ -1,0 +1,310 @@
+﻿@page "/prototype"
+
+@using System.ComponentModel.DataAnnotations
+@inject NavigationManager Navigation
+@using System.Text
+@using System.Text.Json
+@inject DesignService DesignService
+
+<PageTitle>DesignGenie</PageTitle>
+
+<header class="navbar">
+    <div class="container">
+        <a href="/types">
+            <button class="back-button">Back</button>
+        </a>
+        <h1 class="logo">DesignGenie</h1>
+        <a href="/setting">
+            <button class="settings-button">⚙️</button>
+        </a>
+    </div>
+</header>
+
+<EditForm Model="@designForm" OnValidSubmit="HandleSubmit" OnFieldChanged="OnFieldChanged">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-section">
+        <h2>1. Project Info</h2>
+        <div>
+            <label>Project/Screen Name:</label>
+            <input class="form-control" @bind="designForm.ProjectName" />
+            <ValidationMessage For="@(() => designForm.ProjectName)" />
+        </div>
+
+        <div>
+            <label>Screen Type:</label>
+            <select class="form-control" @bind="designForm.ScreenType">
+                <option value="">-- Select Screen Type --</option>
+                <option>Landing Page</option>
+                <option>Dashboard</option>
+                <option>Form</option>
+                <option>Profile</option>
+            </select>
+            <ValidationMessage For="@(() => designForm.ScreenType)" />
+        </div>
+
+        <div>
+            <label>Industry / App Category:</label>
+            <input class="form-control" @bind="designForm.Industry" />
+            <ValidationMessage For="@(() => designForm.Industry)" />
+        </div>
+    </div>
+
+    <div class="form-section">
+        <h2>2. UI Layout Preferences</h2>
+
+        <div>
+            <label>Number of Columns:</label>
+            <select class="form-control" @bind="designForm.Columns">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Header:</label>
+            <select class="form-control" @bind="designForm.HasHeader">
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Sidebar:</label>
+            <select class="form-control" @bind="designForm.SidebarPosition">
+                <option>None</option>
+                <option>Left</option>
+                <option>Right</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Footer:</label>
+            <select class="form-control" @bind="designForm.HasFooter">
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-section">
+        <h2>3. Design Style & Theme</h2>
+
+        <div>
+            <label>Theme:</label>
+            <select class="form-control" @bind="designForm.Theme">
+                <option>Light</option>
+                <option>Dark</option>
+                <option>Auto</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Primary Color:</label>
+            <input type="color" @bind="designForm.PrimaryColor" />
+        </div>
+
+        <div>
+            <label>Style:</label>
+            <select class="form-control" @bind="designForm.Style">
+                <option>Minimalist</option>
+                <option>Classic</option>
+                <option>Material</option>
+                <option>Futuristic</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-section">
+        <h2>4. Features / Modules</h2>
+        @foreach (var feature in AllFeatures)
+        {
+            <div>
+                <input type="checkbox" @bind="feature.IsSelected" />
+                <label>@feature.Name</label>
+            </div>
+        }
+    </div>
+
+    <div class="form-section">
+        <h2>5. Component Arrangement (Optional)</h2>
+        <label>Section Order (manual):</label>
+        <input class="form-control" placeholder="e.g. Header → Sidebar → Main → Footer" @bind="designForm.ComponentOrder" />
+    </div>
+
+    <div class="form-section">
+        <h2>6. Dimensions & Complexity</h2>
+
+        <div>
+            <label>Width:</label>
+            <input type="number" @bind="designForm.Width" />
+            <ValidationMessage For="@(() => designForm.Width)" />
+        </div>
+
+        <div>
+            <label>Height:</label>
+            <input type="number" @bind="designForm.Height" />
+            <ValidationMessage For="@(() => designForm.Height)" />
+        </div>
+
+        <div>
+            <label>Design Complexity: <strong>@designForm.Complexity</strong></label>
+            <input type="range" min="1" max="10" @bind="designForm.Complexity" />
+        </div>
+
+        <div>
+            <label>Device Type:</label>
+            <select class="form-control" @bind="designForm.DeviceType">
+                <option>Mobile</option>
+                <option>Tablet</option>
+                <option>Desktop</option>
+            </select>
+        </div>
+
+        <button class="generate-btn" type="submit" disabled="@isGenerating">
+            @if (isGenerating)
+            {
+                <img src="loading.gif" alt="Loading..." style="width: 48px; height: 48px;" />
+                <span>Generating...</span>
+            }
+            else
+            {
+                <span>🚀 Generate Design</span>
+            }
+        </button>
+    </div>
+</EditForm>
+
+@code {
+    private DesignFormModel designForm = new();
+
+    private bool isGenerating = false;
+
+    private List<FeatureOption> AllFeatures = new()
+    {
+        new FeatureOption("Search Bar"),
+        new FeatureOption("User Profile"),
+        new FeatureOption("Table/List View"),
+        new FeatureOption("Graphs/Stats"),
+        new FeatureOption("Notifications"),
+        new FeatureOption("Login Form"),
+        new FeatureOption("Form Fields"),
+        new FeatureOption("File Upload"),
+        new FeatureOption("Filters / Tags"),
+        new FeatureOption("Chat / Messaging"),
+        new FeatureOption("Cards / Widgets")
+    };
+
+    private void OnFieldChanged(FieldChangedEventArgs e)
+    {
+        // This triggers on every field update
+    }
+
+    private async void HandleSubmit()
+ {
+    isGenerating = true;
+    StateHasChanged();
+
+    var selectedFeatures = AllFeatures.Where(f => f.IsSelected).Select(f => f.Name).ToList();
+    string featureList = string.Join(", ", selectedFeatures);
+
+    string prototypePrompt = $"Create a UI prototype for a {designForm.ScreenType} screen in a {designForm.Industry} application. " +
+                             $"It should be a {designForm.DeviceType} layout with {designForm.Columns} column(s), " +
+                             $"{(designForm.HasHeader ? "a header," : "")} " +
+                             $"{(designForm.HasFooter ? "a footer," : "")} " +
+                             $"{(designForm.SidebarPosition != "None" ? $"a {designForm.SidebarPosition.ToLower()} sidebar," : "")} " +
+                             $"and the following features: {featureList}. " +
+                             $"Use a {designForm.Style} style in {designForm.Theme} theme with primary color {designForm.PrimaryColor}. " +
+                             $"Screen dimensions are {designForm.Width}px by {designForm.Height}px. " +
+                             $"Design complexity level is {designForm.Complexity}. " +
+                             $"Component order: {designForm.ComponentOrder}.";
+
+    try
+    {
+        using var httpClient = new HttpClient();
+        var content = new StringContent(
+            JsonSerializer.Serialize(new { imagePrompt = prototypePrompt }),
+            Encoding.UTF8,
+            "application/json"
+        );
+
+        var response = await httpClient.PostAsync("https://nft-cors-server.onrender.com/generateNft", content);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var responseBody = await response.Content.ReadAsStringAsync();
+            using var doc = JsonDocument.Parse(responseBody);
+            var imageUrl = doc.RootElement.GetProperty("data")[0].GetProperty("url").GetString();
+
+            DesignService.ImageUrl = imageUrl;
+            DesignService.ImagePrompt = prototypePrompt;
+            Navigation.NavigateTo("/gene");
+        }
+        else
+        {
+            Console.WriteLine($"❌ API call failed: {response.StatusCode}");
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("🔥 Error generating prototype:");
+        Console.WriteLine(ex.Message);
+    }
+
+    isGenerating = false;
+    StateHasChanged();
+  }
+
+
+    public class DesignFormModel
+    {
+        [Required(ErrorMessage = "Project Name is required.")]
+        public string ProjectName { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Screen Type is required.")]
+        public string ScreenType { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Industry is required.")]
+        public string Industry { get; set; } = string.Empty;
+
+        public int Columns { get; set; } = 2;
+
+        public bool HasHeader { get; set; } = true;
+
+        public string SidebarPosition { get; set; } = "Left";
+
+        public bool HasFooter { get; set; } = true;
+
+        public string Theme { get; set; } = "Light";
+
+        public string PrimaryColor { get; set; } = "#007BFF";
+
+        public string Style { get; set; } = "Minimalist";
+
+        public string ComponentOrder { get; set; } = string.Empty;
+
+        [Range(100, 5000, ErrorMessage = "Width must be between 100 and 5000.")]
+        public int Width { get; set; }
+
+        [Range(100, 5000, ErrorMessage = "Height must be between 100 and 5000.")]
+        public int Height { get; set; }
+
+        [Range(1, 10)]
+        public int Complexity { get; set; } = 5;
+
+        public string DeviceType { get; set; } = "Desktop";
+    }
+
+    public class FeatureOption
+    {
+        public string Name { get; set; }
+        public bool IsSelected { get; set; }
+
+        public FeatureOption(string name)
+        {
+            Name = name;
+        }
+    }
+}

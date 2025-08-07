@@ -1,0 +1,50 @@
+﻿@page "/setting"
+@inject IJSRuntime JS
+@inject NavigationManager Navigation
+
+<div class="container">
+    <h2 class="settings-option">Settings</h2>
+
+    <div class="setting-option">
+        <label for="theme">Theme</label>
+        <select id="theme" @bind="SelectedTheme">
+            <option value="dark">Dark</option>
+            <option value="light">Light</option>
+        </select>
+    </div>
+
+    <button class="btn" @onclick="SaveSettings">Save Settings</button>
+    <button class="back-button" @onclick="NavigateToTypes">Back</button>
+</div>
+
+@code {
+    private string SelectedTheme = "dark";
+    private bool EnableNotifications = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var storedTheme = await JS.InvokeAsync<string>("localStorage.getItem", "theme") ?? "dark";
+            SelectedTheme = storedTheme;
+
+            var notifValue = await JS.InvokeAsync<string>("localStorage.getItem", "notifications");
+            EnableNotifications = notifValue == "true";
+
+            await JS.InvokeVoidAsync("applyTheme", storedTheme);
+            StateHasChanged();
+        }
+    }
+
+    private async Task SaveSettings()
+    {
+        await JS.InvokeVoidAsync("localStorage.setItem", "theme", SelectedTheme);
+        await JS.InvokeVoidAsync("localStorage.setItem", "notifications", EnableNotifications.ToString());
+        await JS.InvokeVoidAsync("applyTheme", SelectedTheme);
+    }
+
+    private void NavigateToTypes()
+    {
+        Navigation.NavigateTo("/types");
+    }
+}

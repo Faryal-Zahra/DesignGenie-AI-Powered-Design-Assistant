@@ -1,0 +1,70 @@
+﻿@page "/"
+
+@using Microsoft.AspNetCore.Components.Web
+@inject NavigationManager Navigation
+
+<PageTitle>DesignGenie</PageTitle>
+
+<header class="navbar">
+    <div class="container">
+        <h1 class="logo">DesignGenie</h1>
+        <nav>
+           <a href="/howitwork">How it works</a>
+           <a href="/features">Features</a>
+            <a href="/explore">Explore</a>
+            <a href="reviews">Reviews</a>
+            <a href="/learn" class="learn-more">Learn More</a>
+        </nav>
+    </div>
+</header>
+
+<section class="hero">
+    <h1>Welcome to <span class="highlight">DesignGenie</span></h1>
+    <p class="sub-text">
+        Create AI-powered design prototypes with intelligent automation.
+        Refine, edit, and export your designs seamlessly.
+    </p>
+    <div class="buttons">
+        <a href="/types">
+        <button class="cta" @onclick="NavigateToTypes">🚀 Start Now</button>
+        </a>
+        <a href="/view">
+        <button class="cta secondary" @onclick=" NavigateToView">🔍 View Designs</button>
+        </a>
+
+
+        <br>
+        <br>
+        <br>
+
+
+    </div>
+    <br>
+    <br>
+    <div class="image-container">
+        <img src="beds.jpg" alt="Bed Design">
+        <img src="food.webp" alt="App UI">
+        <img src="chair.jpg" alt="Chair Design">
+    </div>
+
+</section>
+
+
+
+
+@code {
+    void NavigateToTypes()
+    {
+        Console.WriteLine("Navigating to /types...");
+        Navigation.NavigateTo("/types", forceLoad: true);
+        StateHasChanged();
+    }
+
+    void NavigateToView()
+    {
+    Console.WriteLine("Navigating to /view...");
+    Navigation.NavigateTo("/view", forceLoad: true);
+    }
+}
+
+

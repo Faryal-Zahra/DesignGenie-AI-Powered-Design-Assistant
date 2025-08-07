@@ -1,0 +1,117 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\786\\OneDrive\\Pictures\\se_final_file\\FSE FE\\bin\\Debug\\net8.0\\wwwroot\\_framework\\blazor.webassembly.js",
+      "PackagePath": "staticwebassets\\_framework\\blazor.webassembly.js"
+    },
+    {
+      "Id": "C:\\Users\\786\\OneDrive\\Pictures\\se_final_file\\FSE FE\\obj\\Debug\\net8.0\\compressed\\29h3uv4nt4.gz",
+      "PackagePath": "staticwebassets\\_framework\\blazor.webassembly.js.gz"
+    },
+    {
+      "Id": "C:\\Users\\786\\OneDrive\\Pictures\\se_final_file\\FSE FE\\obj\\Debug\\net8.0\\scopedcss\\bundle\\SE_Project_2.styles.css",
+      "PackagePath": "staticwebassets\\SE_Project_2.styles.css"
+    },
+    {
+      "Id": "C:\\Users\\786\\OneDrive\\Pictures\\se_final_file\\FSE FE\\wwwroot\\Screenshot 2025-04-20 184259.png",
+      "PackagePath": "staticwebassets\\Screenshot 2025-04-20 184259.png"
+    },
+    {
+      "Id": "C:\\Users\\786\\OneDrive\\Pictures\\se_final_file\\FSE FE\\wwwroot\\app_lay.png",
+      "PackagePath": "staticwebassets\\app_lay.png"
+    },
+    {
+      "Id": "C:\\Users\\786\\OneDrive\\Pictures\\se_final_file\\FSE FE\\wwwroot\\beds.jpg",
+      "PackagePath": "staticwebassets\\beds.jpg"
+    },
+    {
+      "Id": "C:\\Users\\786\\OneDrive\\Pictures\\se_final_file\\FSE FE\\wwwroot\\chair.jpg",
+      "PackagePath": "staticwebassets\\chair.jpg"
+    },
+    {
+      "Id": "C:\\Users\\786\\OneDrive\\Pictures\\se_final_file\\FSE FE\\wwwroot\\css\\app.css",
+      "PackagePath": "staticwebassets\\css\\app.css"
+    },
+    {
+      "Id": "C:\\Users\\786\\OneDrive\\Pictures\\se_final_file\\FSE FE\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\786\\OneDrive\\Pictures\\se_final_file\\FSE FE\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\786\\OneDrive\\Pictures\\se_final_file\\FSE FE\\wwwroot\\download.png",
+      "PackagePath": "staticwebassets\\download.png"
+    },
+    {
+      "Id": "C:\\Users\\786\\OneDrive\\Pictures\\se_final_file\\FSE FE\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "C:\\Users\\786\\OneDrive\\Pictures\\se_final_file\\FSE FE\\wwwroot\\food.webp",
+      "PackagePath": "staticwebassets\\food.webp"
+    },
+    {
+      "Id": "C:\\Users\\786\\OneDrive\\Pictures\\se_final_file\\FSE FE\\wwwroot\\generated-image (1).png",
+      "PackagePath": "staticwebassets\\generated-image (1).png"
+    },
+    {
+      "Id": "C:\\Users\\786\\OneDrive\\Pictures\\se_final_file\\FSE FE\\wwwroot\\generated-image.png",
+      "PackagePath": "staticwebassets\\generated-image.png"
+    },
+    {
+      "Id": "C:\\Users\\786\\OneDrive\\Pictures\\se_final_file\\FSE FE\\wwwroot\\genrate_chair.png",
+      "PackagePath": "staticwebassets\\genrate_chair.png"
+    },
+    {
+      "Id": "C:\\Users\\786\\OneDrive\\Pictures\\se_final_file\\FSE FE\\wwwroot\\housing.jpg",
+      "PackagePath": "staticwebassets\\housing.jpg"
+    },
+    {
+      "Id": "C:\\Users\\786\\OneDrive\\Pictures\\se_final_file\\FSE FE\\wwwroot\\icon-192.png",
+      "PackagePath": "staticwebassets\\icon-192.png"
+    },
+    {
+      "Id": "C:\\Users\\786\\OneDrive\\Pictures\\se_final_file\\FSE FE\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "C:\\Users\\786\\OneDrive\\Pictures\\se_final_file\\FSE FE\\wwwroot\\js\\theme.js",
+      "PackagePath": "staticwebassets\\js\\theme.js"
+    },
+    {
+      "Id": "C:\\Users\\786\\OneDrive\\Pictures\\se_final_file\\FSE FE\\wwwroot\\loading.gif",
+      "PackagePath": "staticwebassets\\loading.gif"
+    },
+    {
+      "Id": "C:\\Users\\786\\OneDrive\\Pictures\\se_final_file\\FSE FE\\wwwroot\\prototyping.jpg",
+      "PackagePath": "staticwebassets\\prototyping.jpg"
+    },
+    {
+      "Id": "C:\\Users\\786\\OneDrive\\Pictures\\se_final_file\\FSE FE\\wwwroot\\sample-data\\weather.json",
+      "PackagePath": "staticwebassets\\sample-data\\weather.json"
+    },
+    {
+      "Id": "C:\\Users\\786\\OneDrive\\Pictures\\se_final_file\\FSE FE\\wwwroot\\theme.js",
+      "PackagePath": "staticwebassets\\theme.js"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.SE_Project_2.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.SE_Project_2.props",
+      "PackagePath": "build\\SE_Project_2.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.SE_Project_2.props",
+      "PackagePath": "buildMultiTargeting\\SE_Project_2.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.SE_Project_2.props",
+      "PackagePath": "buildTransitive\\SE_Project_2.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

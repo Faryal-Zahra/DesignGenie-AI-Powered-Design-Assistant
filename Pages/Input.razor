@@ -1,0 +1,162 @@
+﻿@page "/input"
+
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components.Web
+@using System.Text.Json
+@using System.Text
+@using System.Net.Http
+@using System.Net.Http.Headers
+@inject DesignService DesignService
+@inject NavigationManager Navigation
+@inject HttpClient Http
+
+<PageTitle>DesignGenie</PageTitle>
+
+<header class="navbar">
+    <div class="container">
+        <a href="/types">
+            <button class="back-button">Back</button>
+        </a>
+        <h1 class="logo">DesignGenie</h1>
+
+        <a href="/setting">
+            <button class="settings-button">⚙️</button>
+        </a>
+    </div>
+</header>
+
+<section class="form-section">
+    <h2>Set Your Design Constraints</h2>
+
+    <EditForm Model="@designInput" OnValidSubmit="@GenerateDesign" OnFieldChanged="@HandleFieldChanged">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="form-container">
+            <input type="text" class="form-control" placeholder="Enter Architecture Name"
+                @bind="designInput.ArchitectureName" />
+            <ValidationMessage For="@(() => designInput.ArchitectureName)" class="validation-message" />
+
+            <input type="number" class="form-control" placeholder="Enter Width" @bind="designInput.Width" />
+            <ValidationMessage For="@(() => designInput.Width)" class="validation-message" />
+
+            <input type="number" class="form-control" placeholder="Enter Height" @bind="designInput.Height" />
+            <ValidationMessage For="@(() => designInput.Height)" class="validation-message" />
+
+            <select @bind="designInput.Material" class="form-control">
+                <option value="">-- Select Material --</option>
+                <option value="Metal">Metal</option>
+                <option value="Wood">Wood</option>
+                <option value="Plastic">Plastic</option>
+                <option value="Mixture">Mixture</option>
+            </select>
+            <ValidationMessage For="@(() => designInput.Material)" class="validation-message" />
+
+            <label>Complexity Level: <span>@designInput.ComplexityLevel</span></label>
+            <input type="range" min="1" max="10" @bind="designInput.ComplexityLevel" />
+
+            <button class="generate-btn" type="submit">
+                @if (isGenerating)
+                {
+                    <img src="loading.gif" alt="Loading..." style="width: 48px; height 48px;" />
+                    <span>Generating...</span>
+                }
+                else
+                {
+                    <span>🚀 Generate Design</span>
+                }
+            </button>
+        </div>
+    </EditForm>
+</section>
+
+@code {
+    private DesignInputModel designInput = new();
+
+    // Real-time field validation handler
+    private void HandleFieldChanged(FieldChangedEventArgs args)
+    {
+        // You can put custom validation logic here if needed
+    }
+
+    private bool isGenerating { get; set; } = false;
+
+    private async Task GenerateDesign()
+    {
+        isGenerating = true;
+        string imagePrompt = $"Visualize a software services architecture diagram named '{designInput.ArchitectureName}'. " +
+        $"The architecture is composed using {designInput.Material}-based components, " +
+        $"with an overall complexity level of {designInput.ComplexityLevel} out of 10, indicating a moderately complex system. "
+        +
+        $"The system spans a virtual canvas of {designInput.Width}x{designInput.Height} units. " +
+        $"Depict interconnected microservices, databases, APIs, and user interfaces with clear visual separation. " +
+        $"Use modern diagrammatic conventions and minimalistic style. " +
+        $"Highlight data flow and component interactions to clearly reflect the system's functionality.";
+
+
+        Console.WriteLine($"Image Prompt: {imagePrompt}");
+
+        try
+        {
+            using var httpClient = new HttpClient();
+            var content = new StringContent(
+            JsonSerializer.Serialize(new { imagePrompt }),
+            Encoding.UTF8,
+            "application/json"
+            );
+
+            var response = await httpClient.PostAsync("https://nft-cors-server-production.up.railway.app/generateNft", content);
+
+            Console.WriteLine($"Image Prompt: {response}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var responseBody = await response.Content.ReadAsStringAsync();
+                Console.WriteLine("✅ API Response:");
+                Console.WriteLine(responseBody);
+                using var doc = JsonDocument.Parse(responseBody);
+                var imageUrl = doc.RootElement.GetProperty("data")[0].GetProperty("url").GetString();
+
+                DesignService.ImageUrl = imageUrl;
+                DesignService.ImagePrompt = imagePrompt;
+                Console.WriteLine("Saved Image URL: " + imageUrl);
+
+                isGenerating = false;
+                Navigation.NavigateTo("/gene");
+            }
+            else
+            {
+                Console.WriteLine($"❌ API call failed: {response.StatusCode}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("🔥 Error calling API:");
+            Console.WriteLine(ex.Message);
+        }
+        isGenerating = false;
+        // After API call, you can navigate if needed
+        @* Navigation.NavigateTo("/gene"); *@
+    }
+
+    public class DesignInputModel
+    {
+        [Required(ErrorMessage = "Architecture Name is required.")]
+        [MinLength(2, ErrorMessage = "Name must be at least 2 characters.")]
+        public string ArchitectureName { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Width is required.")]
+        [Range(1, 10000, ErrorMessage = "Width must be a positive number.")]
+        public int Width { get; set; }
+
+        [Required(ErrorMessage = "Height is required.")]
+        [Range(1, 10000, ErrorMessage = "Height must be a positive number.")]
+        public int Height { get; set; }
+
+        [Required(ErrorMessage = "Material must be selected.")]
+        public string Material { get; set; } = string.Empty;
+
+        [Range(1, 10, ErrorMessage = "Complexity must be between 1 and 10.")]
+        public int ComplexityLevel { get; set; } = 5;
+    }
+}
